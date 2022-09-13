@@ -6,6 +6,7 @@ package com.funcionarios.apirest_crud.models;
 
 import java.io.Serializable;
 import java.util.List;
+//import javax.persistence.Column;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -20,6 +21,7 @@ import javax.persistence.GenerationType;
 @Entity
 @Table()
 public class Funcionarios implements Serializable{
+    
     
     private static final long serialVersionUID = 1L;
     
@@ -38,6 +40,10 @@ public class Funcionarios implements Serializable{
      */
     public long getId() {
         return id;
+    }
+    
+    public void setId(long id){
+        this.id = id;
     }
 
     /**
@@ -81,9 +87,4 @@ public class Funcionarios implements Serializable{
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
     }
-
-    public void addAtrribute(String index, List<Funcionarios> findAll) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
 }
