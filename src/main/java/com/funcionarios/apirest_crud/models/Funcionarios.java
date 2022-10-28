@@ -5,14 +5,13 @@
 package com.funcionarios.apirest_crud.models;
 
 import java.io.Serializable;
-import java.util.List;
-//import javax.persistence.Column;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -29,12 +28,22 @@ public class Funcionarios implements Serializable{
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
     
+    @NotBlank(message="Nome não pode ser vazio")
     private String nome;
     
+    @Email(message="Email inválido")
     private String email;
     
     private String departamento;
-
+    
+    @Deprecated
+    protected Funcionarios(){
+    }
+    
+    public Funcionarios(String nome){
+        this.nome = nome;
+    }
+    
     /**
      * @return the id
      */
@@ -70,7 +79,7 @@ public class Funcionarios implements Serializable{
     /**
      * @param email the email to set
      */
-    public void setEmail(String email) {
+    public void setEmail(String email){
         this.email = email;
     }
 
