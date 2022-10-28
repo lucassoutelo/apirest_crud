@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.funcionarios.apirest_crud.repository.FuncionarioRepo;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,29 +41,32 @@ public class FuncionarioResource{
     
     @GetMapping("/novoFuncionario")
     public ModelAndView novoFuncionario(Funcionarios funcionario){
-    ModelAndView mav = new ModelAndView("cadastro");
-    mav.addObject("funcionarios", funcionario);
-    return mav;
+        ModelAndView mav = new ModelAndView("cadastro");
+        mav.addObject("funcionarios", funcionario);
+        return mav;
     }
     
     @PostMapping("/salvarFuncionario")
-    public String salvarFuncionario(@ModelAttribute Funcionarios funcionario){
-    funcionarioRepo.save(funcionario);
-    return "redirect:/mostrarFuncionarios";
+        public String salvarFuncionario(@Valid @ModelAttribute Funcionarios funcionario, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "cadastro";  
+        }
+        funcionarioRepo.save(funcionario);
+        return "redirect:/mostrarFuncionarios";
     }
     
     @GetMapping("/atualizarFuncionario")
-    public ModelAndView atualizarFuncionario(@RequestParam Long funcionarioId){
-    ModelAndView mav = new ModelAndView("cadastro");
-    Funcionarios funcionario = funcionarioRepo.findById(funcionarioId).get();
-    mav.addObject("funcionarios", funcionario);
-    return mav;
+        public ModelAndView atualizarFuncionario(@RequestParam Long funcionarioId){
+        ModelAndView mav = new ModelAndView("cadastro");
+        Funcionarios funcionario = funcionarioRepo.findById(funcionarioId).get();
+        mav.addObject("funcionarios", funcionario);
+        return mav;
     }
     
     @PutMapping("/alterarFuncionario")
-    public String alterarFuncionario(@ModelAttribute Funcionarios funcionario){
-    funcionarioRepo.save(funcionario);
-    return "redirect:/mostrarFuncionarios";
+        public String alterarFuncionario(@ModelAttribute Funcionarios funcionario){
+        funcionarioRepo.save(funcionario);
+        return "redirect:/mostrarFuncionarios";
     }
     
     @GetMapping("/excluirFuncionario")
